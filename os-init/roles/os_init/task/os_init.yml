@@ -1,0 +1,17 @@
+- import_playbook: ssh_key.yml   #顺序不可调整
+- import_playbook: user.yml      #顺序不可调整
+- import_playbook: dir.yml       #顺序不可调整
+- import_playbook: repo.yml      #顺序不可调整
+- import_playbook: init_pkg.yml  #顺序不可调整
+- import_playbook: update.yml    #顺序不可调整
+- import_playbook: dns.yml
+- import_playbook: chrony.yml
+- import_playbook: limits.yml
+- import_playbook: profile.yml
+- import_playbook: rc.local.yml
+- import_playbook: rsyslog.yml
+- import_playbook: safe.yml
+- import_playbook: selinux.yml
+- import_playbook: sshd.yml
+- import_playbook: sysctl.yml
+- import_playbook: network.yml

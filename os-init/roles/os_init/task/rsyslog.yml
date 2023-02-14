@@ -1,0 +1,18 @@
+---
+- name: Rsyslog optimization 
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: modify rsyslog.conf
+      replace:
+        path: /etc/rsyslog.conf
+        regexp: 'cron.none'
+        replace: 'cron.none;local3.none'
+      tags: rsyslog
+
+    - name: restart rsyslog
+      service: enabled=true name=rsyslog state=restarted
+      tags:  rsyslog

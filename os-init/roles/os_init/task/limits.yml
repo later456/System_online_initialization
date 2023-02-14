@@ -1,0 +1,16 @@
+---
+- name: modify limits
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: change limits
+      lineinfile: path=/etc/security/limits.conf line={{ item }}
+      with_items:
+        - "* soft nofile 655350"
+        - "* hard nofile 655350"
+        - "* soft nproc 65535"
+        - "* hard nproc 65535"
+      tags: limits

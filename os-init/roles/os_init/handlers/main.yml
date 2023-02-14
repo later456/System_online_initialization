@@ -1,0 +1,12 @@
+# ---
+# - name: restart sshd&rsyslog
+#   hosts: nodes_all
+#   gather_facts: no
+#   tasks:
+#     - name: Include common vars
+#       include_vars: file=../vars/vars.yml
+#     - name: restart rsyslog
+#       service: name=rsyslog state=restarted      
+#     - name: restart sshd
+#       service: name=sshd state=restarted
+

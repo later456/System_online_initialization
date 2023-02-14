@@ -1,0 +1,13 @@
+
+---
+- name: time synchronization 
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: set chrony #每天02点02分同步时间
+      cron: name="time sync for chrony" job="/usr/sbin/chronyd -q \'\'\"server  ntp1.aliyun.com iburst\"\'\' && /sbin/hwclock -w" minute="02" hour="02" state=present
+      tags: set_chrony
+     

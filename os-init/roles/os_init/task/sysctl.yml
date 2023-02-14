@@ -1,0 +1,19 @@
+---
+- name: sysctl.conf optimization
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: set sysctl.conf
+      template:
+        src: ../templates/sysctl.conf.j2
+        dest: /etc/sysctl.conf
+        backup: yes
+      tags: set_sysctl
+
+    - name: "sysctl -p"
+      command: sysctl -p
+      ignore_errors: True
+      tags: reload_sysctl

@@ -1,0 +1,13 @@
+---
+- name: Copy public key 
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: Set authorized key taken from file
+      authorized_key:
+        user: "{{ansible_ssh_user}}"
+        state: present
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"

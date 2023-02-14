@@ -1,0 +1,22 @@
+---
+- name: History command list optimization 
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: /etc/profile
+      lineinfile: 
+        path: /etc/profile
+        line: "{{ item }}"
+      with_items:
+        - "readonly TMOUT=1800"
+        - 'export HISTTIMEFORMAT="%F %T # "'
+        - "export HISTSIZE=10240"
+        - "export PROMPT_COMMAND=\'{ msg=$(history 1 | { read x y; echo $y; });logger -p local3.notice \"[euid=$(whoami)]\":$(who am i):[`pwd`]\"$msg\"; }\'"
+        - 'readonly PROMPT_COMMAND'
+
+    - name: Refresh /etc/profile environment variable
+      shell: source /etc/profile
+

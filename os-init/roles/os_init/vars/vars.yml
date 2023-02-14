@@ -1,0 +1,112 @@
+# 系统初始化组
+grouplist:
+  - name: later
+    gid: 500
+  # - name: later1
+  #   gid: 501
+
+# 系统初始用户
+userlist:
+  - name: deploy
+    pass: Deploy123456.
+    uid: 500
+    groups: later
+  # - name: deploy1
+  #   pass: deploy123456.
+  #   uid: 500
+  #   groups: later
+
+#用户 权限
+deploy_user: deploy
+later_group: later
+directory_permission: 0775
+
+#系统初始统一目录,下列目录都会创建
+common_directory:
+  - /later
+  - /later/opt
+  - /later/etc
+  - /later/logs
+  - /later/data
+  - /later/tmp
+  - /later/software
+  - /etc/yum.repos.d/bak
+
+#包存放目录，该变量直接调用
+soft_dir: /later/software
+
+#w网卡名字
+ifcfg_name: eth0
+
+# sshd_port: 22
+# java_home: /usr/java/default
+# service_dir: /lib/systemd/system
+# profile_dir: /etc/profile.d
+# system_fonts: /usr/share/fonts
+
+#架构
+# cpu_architecture1: amd64
+# cpu_architecture2: x86_64
+
+#Centos7基础工具
+centos7_pkgs:
+  - vim
+  - chrony
+  - sysstat
+  - lrzsz
+  - tree
+  - telnet
+  - wget
+  - gzip
+  - zip
+  - unzip
+  - lsof
+  - make
+  - gcc
+  - gcc-c++
+  - automake
+  - autoconf
+  - libtool
+  - git
+  - openssl
+  - openssl-devel
+  - cmake
+  - net-tools
+  - psmisc
+  - bash-completion
+  - curl
+  - rsync
+  - bash
+  - libselinux-python
+
+#Rocky8基础工具
+rocky8_pkgs:
+  - vim
+  - chrony
+  - sysstat
+  - lrzsz
+  - tree
+  - telnet
+  - wget
+  - gzip
+  - zip
+  - unzip
+  - lsof
+  - make
+  - gcc
+  - gcc-c++
+  - automake
+  - autoconf
+  - libtool
+  - git
+  - openssl
+  - openssl-devel
+  - cmake
+  - net-tools
+  - psmisc
+  - bash-completion
+  - curl
+  - rsync
+  - bash
+  - python3-libselinux
+  - rsyslog

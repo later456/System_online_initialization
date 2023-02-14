@@ -1,0 +1,17 @@
+---
+- name: Create directory
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: create directory
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{deploy_user}}"
+        group: "{{vincent_group}}"
+        mode: "{{directory_permission}}"
+      with_items: "{{ common_directory }}"
+

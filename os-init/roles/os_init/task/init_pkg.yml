@@ -1,0 +1,24 @@
+---
+- name: Installation foundation package 
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: Clean up the yum cache and rebuild the cache( quite slow )
+      shell: yum clean all && yum makecache
+
+    - name: centos7 init packages install ( quite slow )
+      yum: name={{ centos7_pkgs }} update_cache=yes
+      #yum: name={{ item }} update_cache=yes
+      #with_items: "{{ centos7_pkgs }}"
+      when: ansible_distribution_major_version == "7"
+      tags: centos7_init_package
+
+    - name: rocky8 init packages install ( quite slow )
+      yum: name={{ rocky8_pkgs }} update_cache=yes
+      #yum: name={{ item }} update_cache=yes
+      #with_items: "{{ centos7_pkgs }}"
+      when: ansible_distribution_major_version == "8"
+      tags: rocky8_init_package

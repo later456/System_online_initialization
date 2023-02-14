@@ -1,0 +1,11 @@
+[nodes_all]
+192.168.5.63       
+192.168.5.62
+
+
+
+
+#远程主机管理员账号密码，需修改
+[all:vars]
+ansible_ssh_user=root
+ansible_ssh_pass=1

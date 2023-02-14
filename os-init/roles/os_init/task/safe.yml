@@ -1,0 +1,43 @@
+---
+- name: os close service
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    # 禁止control-alt-delete 避免快捷键CTRL+ALT+DEL误操作导致系统重启
+    - name: linux ban control-alt-delete
+      file:
+        path: /usr/lib/systemd/system/ctrl-alt-del.target
+        state: absent
+      when: ansible_distribution_major_version == "7"
+      tags: safe
+
+    # # 密码过期时间
+    # - name: set authentication rule
+    #   lineinfile:
+    #     path: /etc/login.defs
+    #     regexp: "{{ item.regexp_string }}"
+    #     line: "{{ item.rule }}"
+    #   with_items:
+    #     - { regexp_string: "^PASS_MAX_DAYS", rule: "PASS_MAX_DAYS   90"}
+    #     - { regexp_string: "^PASS_MIN_DAYS", rule: "PASS_MIN_DAYS   0"}
+    #     - { regexp_string: "^PASS_MIN_LEN", rule: "PASS_MIN_LEN   5"}
+    #     - { regexp_string: "^PASS_WARN_AGE", rule: "PASS_WARN_AGE   10"}
+    #   tags: safe
+    
+    # 关闭无用服务
+    - name: os close service
+      service:
+        name: "{{ item }}"
+        state: stopped 
+        enabled: no
+      with_items:
+        - "httpd"
+        - "postfix"
+        - "sendmail"
+        - "iptables"
+        - "firewalld"
+      ignore_errors: yes
+      tags: safe

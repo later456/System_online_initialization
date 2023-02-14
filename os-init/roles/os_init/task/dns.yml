@@ -1,0 +1,17 @@
+
+---
+- name: Modify dns 
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name:  config dns
+      lineinfile:
+        path: /etc/resolv.conf
+        line: "{{ item }}"
+      with_items:
+        - "search test.com"
+        - "nameserver 223.5.5.5"
+        - "nameserver 223.6.6.6"

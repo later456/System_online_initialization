@@ -1,0 +1,27 @@
+---
+- name: modify network name
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: Sync network.sh file
+      template:
+        src: '../files/{{ item }}'
+        dest: '{{ soft_dir }}/'
+        owner: '{{deploy_user}}'
+        group: '{{vincent_group}}'
+        mode: '{{directory_permission}}'
+      with_items:
+        - network.sh
+
+    - name: Modify network card 
+      shell: /usr/bin/bash {{ soft_dir }}/network.sh
+
+    - name:  Delete network card shell script 
+      file:
+        path: "{{ soft_dir }}/{{ item }}"
+        state: absent
+      with_items:
+        - network.sh

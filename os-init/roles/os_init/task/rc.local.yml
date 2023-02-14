@@ -1,0 +1,10 @@
+---
+- name: rc.local permission modification 
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: chmod +x /etc/rc.d/rc.local
+      file: path=/etc/rc.d/rc.local mode={{directory_permission}}

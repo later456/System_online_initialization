@@ -1,0 +1,20 @@
+---
+- name: sshd_config optimization
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: set sshd_config
+      replace: path=/etc/ssh/sshd_config regexp={{ item.regexp }} replace={{ item.replace }}
+      with_items:
+    #    - { regexp: "#Port 22", replace: "Port 1022" }
+        - { regexp: "#UseDNS yes", replace: "UseDNS no" }
+        - { regexp: "#PermitRootLogin yes", replace: "PermitRootLogin no" }
+        - { regexp: "GSSAPIAuthentication yes", replace: "GSSAPIAuthentication no" }
+      tags: ssh
+
+    - name: restart sshd
+      service: enabled=true name=sshd state=restarted
+      tags: restart_sshd

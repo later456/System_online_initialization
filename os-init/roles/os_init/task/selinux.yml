@@ -1,0 +1,15 @@
+---
+- name: close selinux
+  hosts: nodes_all
+  gather_facts: no
+  tasks:
+    - name: Include common vars
+      include_vars: file=../vars/vars.yml
+
+    - name: stop selinux
+      selinux: state=disabled
+      tags: stop_selinux
+
+    - name: disable selinux
+      replace: path=/etc/selinux/config regexp=^SELINUX=enforcing replace=SELINUX=disabled
+      tags: disable_selinux

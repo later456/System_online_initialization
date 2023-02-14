@@ -1,0 +1,1 @@
+在线初始化 centos7和rocky8
